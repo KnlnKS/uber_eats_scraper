@@ -1,5 +1,5 @@
 # uber_eats_scraper
-Selenium web scraper written in python. Gathers info on restaurant name, details, rating, and menu items.
+An Uber Eats Selenium web scraper written in python. Gathers info on restaurant name, details, rating, and menu items.
 Saves all restaurant urls in a given city and saves data to a json file. Example structure below:
 
 ```json
