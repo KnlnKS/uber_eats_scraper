@@ -2,6 +2,7 @@ from selenium import webdriver
 import os
 
 from joblib import Parallel, delayed
+from selenium.common.exceptions import NoSuchElementException
 
 
 def get_urls(cat_url):
@@ -12,7 +13,7 @@ def get_urls(cat_url):
         for url in temp_urls:
             out_file = open("temp_urls.txt", "a")
             out_file.write(str(url.get_attribute("href")) + "\n")
-    except:
+    except NoSuchElementException:
         print("Skipped " + cat_url)
 
 
