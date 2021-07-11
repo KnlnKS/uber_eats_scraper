@@ -1,2 +1,8 @@
 # IDE
 .idea/
+
+__pycache__
+
+# Data
+*.txt
+*.json
