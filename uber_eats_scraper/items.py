@@ -10,10 +10,16 @@ class CountryItem(scrapy.Item):
     title = scrapy.Field()
     href = scrapy.Field()
 
+
 class RegionItem(scrapy.Item):
     title = scrapy.Field()
     href = scrapy.Field()
     cities = scrapy.Field()
+
+
+class NeighbourhoodItem(scrapy.Item):
+    title = scrapy.Field()
+    href = scrapy.Field()
 
 
 class CategoryItem(scrapy.Item):

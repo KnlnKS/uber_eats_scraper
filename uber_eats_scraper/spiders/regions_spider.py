@@ -8,7 +8,7 @@ from scrapy.selector import Selector
 from ..items import RegionItem
 
 
-class RegionSpider(scrapy.Spider):
+class RegionsSpider(scrapy.Spider):
     name = 'regions'
 
     def __init__(self, country='', **kwargs):
