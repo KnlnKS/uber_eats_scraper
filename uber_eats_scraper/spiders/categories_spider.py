@@ -6,7 +6,7 @@ import re
 
 class CategoriesSpider(scrapy.Spider):
     name = 'categories'
-    
+
     def __init__(self, city='', **kwargs):
         self.start_urls = ['https://www.ubereats.com/ca/category/' + city]
         super().__init__(**kwargs)
