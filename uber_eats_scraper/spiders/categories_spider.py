@@ -1,15 +1,30 @@
 import scrapy
-from scrapy.selector import Selector
 import json
 import re
 
+from os.path import dirname
+from scrapy.selector import Selector
+
 from ..items import CategoryItem
+
 
 class CategoriesSpider(scrapy.Spider):
     name = 'categories'
 
-    def __init__(self, city='', **kwargs):
-        self.start_urls = ['https://www.ubereats.com/ca/category/' + city]
+    def __init__(self, city='', country='', **kwargs):
+        if country is '':
+            regions_file = open(dirname(__file__) + "/../../output/regions.json", encoding='utf-8')
+            regions = json.load(regions_file)
+            self.start_urls = []
+
+            for i in range(len(regions)):
+                for j in range(len(regions[i]["cities"])):
+                    parsed = regions[i]["cities"][j]["href"].split("/")
+                    self.start_urls.append(
+                        "https://www.ubereats.com/" + parsed[1] + '/category/' + parsed[len(parsed) - 1])
+        else:
+            self.start_urls = ['https://www.ubereats.com/' + country + '/category/' + city]
+
         super().__init__(**kwargs)
 
     def parse(self, response):
@@ -22,7 +37,7 @@ class CategoriesSpider(scrapy.Spider):
         items = CategoryItem()
 
         for i in range(len(category_data)):
-            items["name"] = re.sub(r' Delivery in [^\\]*', '', category_data[i]["text"])
+            items["title"] = re.sub(r' Delivery in [^\\]*', '', category_data[i]["text"])
             items["href"] = category_data[i]["href"]
 
             yield items

@@ -23,5 +23,5 @@ class NeighbourhoodItem(scrapy.Item):
 
 
 class CategoryItem(scrapy.Item):
-    name = scrapy.Field()
+    title = scrapy.Field()
     href = scrapy.Field()
