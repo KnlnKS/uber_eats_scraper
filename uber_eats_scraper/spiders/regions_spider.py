@@ -18,7 +18,7 @@ class RegionsSpider(scrapy.Spider):
 
             self.start_urls = []
             for i in range(len(countries)):
-                self.start_urls.append("https://www.ubereats.com" + countries[i]["href"] + "/location")
+                self.start_urls.append("https://www.ubereats.com" + countries[i]["href"])
         else:
             self.start_urls = ['https://www.ubereats.com/' + country + '/location']
 
