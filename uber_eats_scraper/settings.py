@@ -42,6 +42,8 @@ ROBOTSTXT_OBEY = True
 #   'Accept-Language': 'en',
 #}
 
+FEED_EXPORT_ENCODING = 'utf-8'
+
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
