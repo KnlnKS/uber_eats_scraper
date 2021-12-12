@@ -4,5 +4,6 @@
 __pycache__
 
 # Data
+output/
 *.txt
 *.json
