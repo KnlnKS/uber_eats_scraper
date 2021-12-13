@@ -37,7 +37,6 @@ class CategoriesSpider(scrapy.Spider):
         items = CategoryItem()
 
         for i in range(len(category_data)):
-            items["title"] = re.sub(r' Delivery in [^\\]*', '', category_data[i]["text"])
-            items["href"] = category_data[i]["href"]
+            items["title"] = re.sub(r' Delivery in [^\\]*', '', category_data[i]["text"]).replace("categories.seo.", "")
 
             yield items
