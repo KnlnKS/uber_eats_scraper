@@ -1,16 +1,12 @@
+import { print, getUberSearchFeed, pause, formPrint } from "./helpers/utils.js";
+import { makeDir, writeJson } from "./helpers/file.js";
 import {
-  print,
   createDriver,
-  waitForElementId,
   getCookieString,
-  getUberSearchFeed,
-  writeJson,
-  pause,
-  formPrint,
-  makeDir,
-} from "./helper.js";
-
+  waitForElementId,
+} from "./helpers/driver.js";
 import { categories, regions } from "./data.js";
+
 let locations = [];
 
 regions.forEach((region) => {
