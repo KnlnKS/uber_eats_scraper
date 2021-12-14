@@ -7,3 +7,6 @@ __pycache__
 output/
 *.txt
 *.json
+
+# node
+api_scraper/node_modules/
