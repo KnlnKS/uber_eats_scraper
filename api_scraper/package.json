@@ -1,0 +1,15 @@
+{
+  "name": "api_scraper",
+  "version": "1.0.0",
+  "main": "index.mjs",
+  "license": "MIT",
+  "scripts": {
+    "start": "node --experimental-json-modules ."
+  },
+  "dependencies": {
+    "chromedriver": "96.0.0",
+    "node-fetch": "2",
+    "selenium-webdriver": "4.1.0",
+    "url-parse": "1.5.3"
+  }
+}

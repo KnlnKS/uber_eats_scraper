@@ -9,4 +9,5 @@ output/
 *.json
 
 # node
-api_scraper/node_modules/
+**/node_modules/
+!package.json
