@@ -6,6 +6,8 @@ import {
   getUberSearchFeed,
   writeJson,
   pause,
+  formPrint,
+  makeDir,
 } from "./helper.js";
 
 import { categories, regions } from "./data.js";
@@ -20,6 +22,8 @@ regions.forEach((region) => {
     }))
   );
 });
+
+makeDir("../output/feed/");
 
 for (const i in locations) {
   const { title: location, localeCode } = locations[i];
@@ -46,39 +50,41 @@ for (const i in locations) {
 
   driver.close();
 
+  print("Scraping Uber search feed for " + location);
+  print("----------------------------------------");
   for (const i in categories) {
-    const fileName = `searchResults${location.replace(", ", "")}.json`;
-    let {
-      status,
-      data: { feedItems, meta },
-    } = await getUberSearchFeed(cookieString, categories[i], localeCode);
+    print(location);
+    const fileName = `${localeCode}${location
+      .substring(0, location.indexOf(","))
+      .replaceAll(" ", "")}.json`;
+    let resp = await getUberSearchFeed(cookieString, categories[i], localeCode);
 
-    if (status !== "success") continue;
+    formPrint(resp, categories, i);
+    if (resp?.status !== "success") continue;
 
     writeJson(
       fileName,
-      feedItems.map(({ store }) => ({
+      resp?.data?.feedItems.map(({ store }) => ({
         title: store?.title?.text,
         url: `https://ubereats.com/${localeCode}${store?.actionUrl}`,
         image: store?.image,
       }))
     );
 
-    while (meta?.hasMore) {
-      let {
-        status,
-        data: { feedItems, meta },
-      } = await getUberSearchFeed(
+    while (resp?.data?.meta?.hasMore) {
+      resp = await getUberSearchFeed(
         cookieString,
         categories[i],
         localeCode,
-        meta?.offset
+        resp?.data?.meta?.offset ?? 0
       );
-      if (status !== "success") break;
+
+      formPrint(resp, categories, i);
+      if (resp?.status !== "success") break;
 
       writeJson(
         fileName,
-        feedItems.map(({ store }) => ({
+        resp?.data?.feedItems.map(({ store }) => ({
           title: store?.title?.text,
           url: `https://ubereats.com/${localeCode}${store?.actionUrl}`,
           image: store?.image,

@@ -9,7 +9,7 @@ exports.waitForElementId = async (driver, id, timeout = 5000) =>
 
 exports.createDriver = async () => {
   options = new chrome.Options();
-  //options.addArguments("headless");
+  options.addArguments("headless");
   options.addArguments("disable-gpu");
   options.addArguments("disable-dev-shm-usage");
   options.excludeSwitches("enable-logging");
@@ -110,10 +110,17 @@ exports.getUberSearchFeed = async (cookie, userQuery, localeCode, offset = 0) =>
     )
   ).json();
 
-exports.writeJson = (fileName, array) => {
-  filePath = `../output/${fileName}`;
-  fs.existsSync(filePath) || fs.writeFileSync(filePath, "[]");
+exports.makeDir = (dir) => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+};
 
+exports.writeJson = (fileName, array) => {
+  filePath = `../output/feed/${fileName}`;
+  this.print(fs.existsSync(filePath));
+  if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, "[]");
+  this.print(fs.existsSync(filePath));
   fs.readFile(filePath, (err, data) => {
     // READ
     if (err) {
@@ -122,15 +129,15 @@ exports.writeJson = (fileName, array) => {
 
     var data = JSON.parse(data.toString());
     data = data.concat(array);
-    fs.writeFile(filePath, JSON.stringify(data), (err, result) => {
-      if (err) {
-        return console.error(err);
-      } else {
-        console.log(result);
-        console.log("Success");
-      }
-    });
+    fs.writeFile(filePath, JSON.stringify(data), (err, result) =>
+      err ? console.error(err) : console.log("write success")
+    );
   });
 };
 
 exports.pause = (time) => new Promise((resolve) => setTimeout(resolve, time));
+
+exports.formPrint = (resp, categories, i) =>
+  this.print(
+    `${resp?.status} - ${categories[i]} - hasMore: ${resp?.data?.meta?.hasMore}`
+  );

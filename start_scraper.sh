@@ -46,3 +46,4 @@ rm -rf output
 scrapy crawl regions -o output/regions.json -a country="${country}"
 scrapy crawl categories -o output/categories.json
 python scripts/remove_dupe_categories.py
+yarn --cwd api_scraper/ start
