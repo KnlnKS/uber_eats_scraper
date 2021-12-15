@@ -1,5 +1,5 @@
 import { print, getUberSearchFeed, pause, formPrint } from "./helpers/utils.js";
-import { makeDir, writeJson } from "./helpers/file.js";
+import { makeDir, writeJson, removeDupeFromJson } from "./helpers/file.js";
 import {
   createDriver,
   getCookieString,
@@ -46,13 +46,16 @@ for (const i in locations) {
 
   driver.close();
 
-  print("Scraping Uber search feed for " + location);
-  print("----------------------------------------");
+  const fileName = `${localeCode}${location
+    .substring(0, location.indexOf(","))
+    .replaceAll(" ", "")}.json`;
+
+  const str = "Scraping Uber search feed for " + location;
+  print();
+  print(str);
+  print(new Array(str.length).join("-"));
+
   for (const i in categories) {
-    print(location);
-    const fileName = `${localeCode}${location
-      .substring(0, location.indexOf(","))
-      .replaceAll(" ", "")}.json`;
     let resp = await getUberSearchFeed(cookieString, categories[i], localeCode);
 
     formPrint(resp, categories, i);
@@ -90,4 +93,6 @@ for (const i in locations) {
       pause(250);
     }
   }
+
+  removeDupeFromJson(fileName);
 }
