@@ -27,8 +27,7 @@ def scrape_menu(url):
             "/html/body/div/div/div/main/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]").text
     except:
         num = '(0)'
-
-    breakpoint()
+        
     # after this still not working false xpath
 
     restaurant = {
