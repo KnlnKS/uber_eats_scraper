@@ -3,8 +3,8 @@ import menu_scraper
 import restaurant_scraper
 
 
-base_url = "https://www.ubereats.com/ca/category/"
-city_list = ["toronto", "kingston", "hamilton"]
+base_url = "https://www.ubereats.com/category/"
+city_list = ["new-york-city", "toronto", "kingston", "hamilton", "brooklyn"]
 restaurant_data = {
     'cities': []
 }
